@@ -1,7 +1,7 @@
 XIO - Digital audio effects development kit
 ==================================
 
-XIO provides a light framework for developing audio processing applications running on 3Degrees XIO USB/DSP modules.
+XIO provides a light framework for developing audio processing applications running on 3Degrees XIO DSP modules.
 
 XIO development Kit:  https://github.com/markseel/xio
 
