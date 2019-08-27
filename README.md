@@ -134,7 +134,7 @@ DSP Library
 
 You can write your own DSP functions or use these pre-esisting functions.
 ```C
- INCLUDED_DSP
+#ifndef INCLUDED_DSP
 #define INCLUDED_DSP
 
 #include "xio.h"
