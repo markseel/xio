@@ -208,7 +208,8 @@ int preampR_upsample_ss[96], preampR_dnsample_ss[96];
 int preampL1_state[2] = { 0,0 }, preampL2_state[2] = { 0,0 }, preampL3_state[2] = { 0,0 };
 int preampR1_state[2] = { 0,0 }, preampR2_state[2] = { 0,0 }, preampR3_state[2] = { 0,0 };
 
-int preamp_emph_cc[6] = { 0,0,0,0,0,0 };
+int preampL_emph_cc[6] = { 0,0,0,0,0,0 };
+int preampR_emph_cc[6] = { 0,0,0,0,0,0 };
 
 int preampL1_emph_ss[4] = { 0,0,0,0 }, preampL2_emph_ss[4] = { 0,0,0,0 }, preampL3_emph_ss[4] = { 0,0,0,0 };
 int preampR1_emph_ss[4] = { 0,0,0,0 }, preampR2_emph_ss[4] = { 0,0,0,0 }, preampR3_emph_ss[4] = { 0,0,0,0 };
@@ -217,17 +218,19 @@ int preamp_hicut_cc[6] = { 0,0,0,0,0,0 }, preamp_hicut_ss[4] = { 0,0,0,0 };
 
 void xio_thread1( int samples[8], const int property[6] )
 {
+    if( property[0] == 3 ) memcpy( preampL_emph_cc, property+1, 5*sizeof(int) );
+
     int gain = 0; if( property[0] == 1 ) gain = property[2];
     samples[4] = samples[0];
     
     preamp_upsample_4x( samples+0, preamp_upsample_cc, preampL_upsample_ss );
-    preamp_emphasis_4x( samples+0, preamp_emph_cc, preampL1_emph_ss );
+    preamp_emphasis_4x( samples+0, preampL_emph_cc, preampL1_emph_ss );
     preamp_softclip_4x( samples+0, gain );
     preamp_dc_block_4x( samples+0, FQ(0.99990), preampL1_state );
-    preamp_emphasis_4x( samples+0, preamp_emph_cc, preampL2_emph_ss );
+    preamp_emphasis_4x( samples+0, preampL_emph_cc, preampL2_emph_ss );
     preamp_softclip_4x( samples+0, gain );
     preamp_dc_block_4x( samples+0, FQ(0.99950), preampL2_state );
-    preamp_emphasis_4x( samples+0, preamp_emph_cc, preampL3_emph_ss );
+    preamp_emphasis_4x( samples+0, preampL_emph_cc, preampL3_emph_ss );
     preamp_softclip_4x( samples+0, gain );
     preamp_dc_block_4x( samples+0, FQ(0.99900), preampL3_state );    
     preamp_dnsample_4x( samples+0, preamp_dnsample_cc, preampL_dnsample_ss );
@@ -237,14 +240,16 @@ void xio_thread2( int samples[8], const int property[6] )
 {
     int gain = 0; if( property[0] == 1 ) gain = property[3];
 
+    if( property[0] == 3 ) memcpy( preampR_emph_cc, property+1, 5*sizeof(int) );
+
     preamp_upsample_4x( samples+4, preamp_upsample_cc, preampR_upsample_ss );
-    preamp_emphasis_4x( samples+4, preamp_emph_cc, preampR1_emph_ss );
+    preamp_emphasis_4x( samples+4, preampR_emph_cc, preampR1_emph_ss );
     preamp_softclip_4x( samples+4, gain );
     preamp_dc_block_4x( samples+4, FQ(0.99995), preampR1_state );
-    preamp_emphasis_4x( samples+4, preamp_emph_cc, preampR2_emph_ss );
+    preamp_emphasis_4x( samples+4, preampR_emph_cc, preampR2_emph_ss );
     preamp_softclip_4x( samples+4, gain );
     preamp_dc_block_4x( samples+4, FQ(0.9999), preampR2_state );
-    preamp_emphasis_4x( samples+4, preamp_emph_cc, preampR3_emph_ss );
+    preamp_emphasis_4x( samples+4, preampR_emph_cc, preampR3_emph_ss );
     preamp_softclip_4x( samples+4, gain );
     preamp_dc_block_4x( samples+4, FQ(0.9995), preampR3_state );    
     preamp_dnsample_4x( samples+4, preamp_dnsample_cc, preampR_dnsample_ss );
