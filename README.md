@@ -3,8 +3,8 @@ XIO - Digital audio effects development kit
 
 XIO provides a light framework for developing audio processing applications running on 3Degrees XIO USB/DSP modules.
 
-**Customization**  
 XIO development Kit:  https://github.com/markseel/xio
+
 Compiler and Linker:  xTIMEcomposer (current version for FlexFX is 14.3.3) is available from www.xmos.com  
 
 Introduction
