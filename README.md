@@ -285,20 +285,6 @@ The application programmer only needs to add control and audip processing code t
 #include "xio.h"
 #include "dsp.h"
 
-const char* product_name_string   = "Example";           // The product name
-const char* usb_audio_output_name = "Example Audio Out"; // USB audio output name
-const char* usb_audio_input_name  = "Example Audio In";  // USB audio input name
-const char* usb_midi_output_name  = "Example MIDI Out";  // USB MIDI output name
-const char* usb_midi_input_name   = "Example MIDI In";   // USB MIDI input name
-
-const int audio_sample_rate     = 192000; // Default sample rate at boot-up
-const int audio_clock_mode      = 0; // 0=internal/master,1=external/master,2=slave
-const int usb_output_chan_count = 2;     // 2 USB audio class 2.0 output channels
-const int usb_input_chan_count  = 2;     // 2 USB audio class 2.0 input channels
-const int i2s_channel_count     = 2;     // ADC/DAC channels per SDIN/SDOUT wire (2,4,or 8)
-
-const int i2s_sync_word[8] = { 0xFFFFFFFF,0x00000000,0,0,0,0,0,0 }; // I2S WCLK values per slot
-
 int  xio_startup( int id ) { return 512; } // 24.576 Mhz oscillator / 48000 kHz sample rate = 512
 
 void xio_control( const int rcv_prop[6], int snd_prop[6], int dsp_prop[6] ) {}
